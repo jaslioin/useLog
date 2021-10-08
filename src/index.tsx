@@ -27,17 +27,14 @@ type WithLoggerType = {
   loggerType: LoggerType;
   previousStateLoggerType?: LoggerType;
 };
+type WithLogger = {
+  logger: (value: any) => void;
+  previousStateLogger?: (value: any) => void;
+};
 type CommonOptions = {
   logPreviousValue?: boolean;
 };
-type Options = CommonOptions &
-  (
-    | {
-        logger: (value: any) => void;
-        previousStateLogger?: (value: any) => void;
-      }
-    | WithLoggerType
-  );
+type Options = CommonOptions & (WithLogger | WithLoggerType);
 const fallbackLog = (v: any) =>
   console.log(
     '%c%s',

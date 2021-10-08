@@ -8,11 +8,12 @@ Also a project to try out `tsdx`, a typescript library development tool
 
 ### Basic
 
+will execute the default styled `console.log(state)` upon state change
+
 ```ts
   const App = ()=>{
     const [state,setState] = useState({a:1})
 
-    // will execute the default styled console.log(state) upon state change
     useLog(state)
 
     return </>
@@ -21,6 +22,45 @@ Also a project to try out `tsdx`, a typescript library development tool
 ```
 
 ### Options
+
+```ts
+type LoggerType =
+  | 'debug'
+  | 'error'
+  | 'info'
+  | 'log'
+  | 'warn'
+  | 'dir'
+  | 'dirxml'
+  | 'table'
+  | 'trace'
+  | 'group'
+  | 'groupCollapsed'
+  | 'groupEnd'
+  | 'clear'
+  | 'count'
+  | 'countReset'
+  | 'assert'
+  | 'profile'
+  | 'profileEnd'
+  | 'time'
+  | 'timeLog'
+  | 'timeEnd'
+  | 'timeStamp';
+
+type WithLoggerType = {
+  loggerType: LoggerType;
+  previousStateLoggerType?: LoggerType;
+};
+type WithLogger = {
+  logger: (value: any) => void;
+  previousStateLogger?: (value: any) => void;
+};
+type CommonOptions = {
+  logPreviousValue?: boolean;
+};
+type Options = CommonOptions & (WithLogger | WithLoggerType);
+```
 
 - `Options.loggerType`
 
@@ -33,7 +73,8 @@ useLog(state, {
 ```
 
 - `Options.logger`
-- when using `options.logger`, pass a `function` wrapping the native logging api
+
+  when using `options.logger`, pass a `function` wrapping the native logging api
 
 ```ts
 useLog(state, {
