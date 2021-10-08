@@ -34,7 +34,7 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "use-log",
+  "name": "react-use-log",
   "author": "jaslioin",
   "module": "dist/use-log.esm.js",
   "size-limit": [
