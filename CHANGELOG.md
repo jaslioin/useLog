@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/jaslioin/useLog/compare/v1.0.6...v1.1.0) (2021-10-09)
+
+
+### Features
+
+* add label, group option ([1f52961](https://github.com/jaslioin/useLog/commit/1f52961dd77b5b40ffe6ae6eb640b32272b32d6d))
+
 ### [1.0.6](https://github.com/jaslioin/useLog/compare/v1.0.5...v1.0.6) (2021-10-09)
 
 ### [1.0.5](https://github.com/jaslioin/useLog/compare/v1.0.4...v1.0.5) (2021-10-09)
