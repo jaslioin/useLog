@@ -5,9 +5,12 @@ import { useLog } from '../../';
 function App() {
   const [count, setCount] = useState(0);
   const [otherState, setOther] = useState({
-    a: 1,
+    count: 1,
   });
-  useLog(otherState);
+  useLog(count,"count");
+  useLog(otherState,"object group",{
+    isGrouped:true
+  });
   return (
     <div className="App">
       <header className="App-header">
@@ -21,7 +24,7 @@ function App() {
             type="button"
             onClick={() => {
               setCount(c => c + 1);
-              setOther({ a: count + 1 });
+              setOther(c=> ({ count: c.count + 1 }));
             }}
           >
             count is: {count}

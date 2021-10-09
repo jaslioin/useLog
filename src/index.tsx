@@ -1,67 +1,13 @@
 import { useEffect, useRef } from 'react';
-type LoggerType =
-  | 'debug'
-  | 'error'
-  | 'info'
-  | 'log'
-  | 'warn'
-  | 'dir'
-  | 'dirxml'
-  | 'table'
-  | 'trace'
-  | 'group'
-  | 'groupCollapsed'
-  | 'groupEnd'
-  | 'clear'
-  | 'count'
-  | 'countReset'
-  | 'assert'
-  | 'profile'
-  | 'profileEnd'
-  | 'time'
-  | 'timeLog'
-  | 'timeEnd'
-  | 'timeStamp';
+import { Options } from './types';
+import {
+  fallbackPrevLog,
+  isUseLoggerType,
+  fallbackLog,
+  isNil,
+  isUseLogger,
+} from './utils';
 
-type WithLoggerType = {
-  loggerType: LoggerType;
-  previousStateLoggerType?: LoggerType;
-};
-type WithLogger = {
-  logger: (value: any) => void;
-  previousStateLogger?: (value: any) => void;
-};
-type CommonOptions = {
-  logPreviousValue?: boolean;
-};
-type Options = CommonOptions & (WithLogger | WithLoggerType);
-const fallbackLog = (v: any) =>
-  console.log(
-    '%c%s',
-    `
-  color:white;
-  background-color:green; 
-  border-radius:2px;
-  padding:1px;
-`,
-    ' current  ',
-    v
-  );
-const fallbackPrevLog = (v: any) =>
-  console.log(
-    '%c%s',
-    `
-  color:white;
-  background-color:brown; 
-  border-radius:2px;
-  padding:1px;
-`,
-    ' previous ',
-    v
-  );
-const isUseLoggerType = (options: any): options is WithLoggerType => {
-  return !!options?.loggerType;
-};
 /**
  *
  * @param state
@@ -78,30 +24,43 @@ const isUseLoggerType = (options: any): options is WithLoggerType => {
  *  })
  * ```
  */
-export const useLog = <T extends unknown>(state: T, options?: Options) => {
+export const useLog = <T extends unknown>(
+  state: T,
+  label?: string,
+  options?: Options
+) => {
   const prev = useRef<T>();
-  const logPreviousValue =
-    options?.logPreviousValue === null ||
-    options?.logPreviousValue === undefined
-      ? true
-      : options.logPreviousValue;
 
   useEffect(() => {
+    const logPreviousValue = isNil(options?.logPreviousValue)
+      ? true
+      : options?.logPreviousValue;
+
     const logger = isUseLoggerType(options)
-      ? console[options?.loggerType]
-      : options?.logger || fallbackLog;
+      ? options.loggerType
+        ? console[options.loggerType]
+        : fallbackLog
+      : isUseLogger(options)
+      ? options?.logger || fallbackLog
+      : fallbackLog;
+
     const prevLogger = isUseLoggerType(options)
-      ? options?.previousStateLoggerType
-        ? console[options?.previousStateLoggerType]
+      ? options.previousStateLoggerType
+        ? console[options.previousStateLoggerType]
         : fallbackPrevLog
-      : options?.logger
-      ? options?.logger
+      : isUseLogger(options)
+      ? options?.logger || fallbackPrevLog
       : fallbackPrevLog;
+
+    if (options?.isGrouped) console.group(label);
+
     if (logPreviousValue) {
-      prevLogger(prev.current);
+      prevLogger(prev.current, label);
     }
-    logger(state);
+    logger(state, label);
+
+    if (options?.isGrouped) console.groupEnd();
 
     prev.current = state;
-  }, [state, options]);
+  }, [state, options, label]);
 };

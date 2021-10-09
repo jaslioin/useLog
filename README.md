@@ -1,4 +1,5 @@
 # use-log
+
 ![img](https://raw.githubusercontent.com/jaslioin/useLog/master/docs/demo.png)
 
 A React Hook shortcut to log state changes inside react component
@@ -25,7 +26,7 @@ will execute the default styled `console.log(state)` upon state change
 ### Options
 
 ```ts
-type LoggerType =
+export type LoggerType =
   | 'debug'
   | 'error'
   | 'info'
@@ -49,18 +50,19 @@ type LoggerType =
   | 'timeEnd'
   | 'timeStamp';
 
-type WithLoggerType = {
-  loggerType: LoggerType;
+export type WithLoggerType = {
+  loggerType?: LoggerType;
   previousStateLoggerType?: LoggerType;
 };
-type WithLogger = {
-  logger: (value: any) => void;
-  previousStateLogger?: (value: any) => void;
+export type WithLogger = {
+  logger?: (value: any, label?: string) => void;
+  previousStateLogger?: (value: any, label?: string) => void;
 };
-type CommonOptions = {
+export type CommonOptions = {
   logPreviousValue?: boolean;
+  isGrouped?: boolean;
 };
-type Options = CommonOptions & (WithLogger | WithLoggerType);
+export type Options = CommonOptions & (WithLogger | WithLoggerType | {});
 ```
 
 - `Options.loggerType`
@@ -68,7 +70,7 @@ type Options = CommonOptions & (WithLogger | WithLoggerType);
   when using `options.loggerType`, pass a string representing logging functions under `console`
 
 ```ts
-useLog(state, {
+useLog(state, 'my state', {
   loggerType: 'table',
 });
 ```
@@ -78,8 +80,9 @@ useLog(state, {
   when using `options.logger`, pass a `function` wrapping the native logging api
 
 ```ts
-useLog(state, {
-  logger: (v: any) => console.log('%c%s', 'color:red', v),
+useLog(state, 'my state', {
+  logger: (v: any, label?: string) =>
+    console.log('%c%s', 'color:red', label, v),
 });
 ```
 
