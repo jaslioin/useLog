@@ -7,6 +7,9 @@
     "dist",
     "src"
   ],
+  "repository": {
+    "url": "https://github.com/jaslioin/useLog"
+  },
   "engines": {
     "node": ">=10"
   },
