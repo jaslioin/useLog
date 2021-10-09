@@ -51,13 +51,13 @@ export const useLog = <T extends unknown>(
       : isUseLogger(options)
       ? options?.logger || fallbackPrevLog
       : fallbackPrevLog;
-
-    if (options?.isGrouped) console.group(label);
+    const displayLabel = label || ''
+    if (options?.isGrouped) console.group(displayLabel);
 
     if (logPreviousValue) {
-      prevLogger(prev.current, label);
+      prevLogger(prev.current, displayLabel);
     }
-    logger(state, label);
+    logger(state, displayLabel);
 
     if (options?.isGrouped) console.groupEnd();
 
