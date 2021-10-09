@@ -1,5 +1,5 @@
 # use-log
-![img](docs/demo.png)
+![img](https://raw.githubusercontent.com/jaslioin/useLog/master/docs/demo.png)
 
 A React Hook shortcut to log state changes inside react component
 
