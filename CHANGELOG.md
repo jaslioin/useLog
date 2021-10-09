@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.2](https://github.com/jaslioin/useLog/compare/v1.1.1...v1.1.2) (2021-10-09)
+
+
+### Bug Fixes
+
+* label not provided will print undefined ([713f6c4](https://github.com/jaslioin/useLog/commit/713f6c41c352c11798743d22416a25f0c7bfd48f))
+
 ### [1.1.1](https://github.com/jaslioin/useLog/compare/v1.1.0...v1.1.1) (2021-10-09)
 
 ## [1.1.0](https://github.com/jaslioin/useLog/compare/v1.0.6...v1.1.0) (2021-10-09)
