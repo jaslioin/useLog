@@ -2,6 +2,7 @@
   "version": "1.1.2",
   "license": "MIT",
   "main": "dist/index.js",
+  "keywords": ["console.log","hook","react","logger","uselog","use-log"],
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
